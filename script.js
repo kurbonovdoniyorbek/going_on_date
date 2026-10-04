@@ -1,30 +1,30 @@
-// ===== Настройки =====
+// ===== Settings =====
 const messages = [
-    "Ты уверена?",
-    "Точно уверена??",
-    "Совсем-совсем уверена?",
-    "Пупсик, пожалуйста...",
-    "Просто подумай ещё раз!",
-    "Если скажешь «нет», мне будет очень грустно...",
-    "Мне будет очень грустно...",
-    "Мне будет очень-очень-очень грустно...",
-    "Ладно, я перестану спрашивать...",
-    "Шучу 😘 Просто скажи «да»! ❤️"
+    "Are you sure?",
+    "Really sure??",
+    "Totally, completely sure?",
+    "Gulasal, pretty please...",
+    "Just think about it once more!",
+    "If you say no, I'll be really sad...",
+    "I'll be so sad...",
+    "I'll be very, very, very sad...",
+    "Okay, I'll stop asking...",
+    "Just kidding 😘 Say yes! ❤️"
 ];
 
 const hints = [
-    "Выбирай сердцем 💕",
-    "Хм... кнопка «Да» стала больше 👀",
-    "Она растёт, пока ты думаешь 😏",
-    "Я терпеливый 🥺",
-    "Кнопка «Нет» устала и убегает 🏃‍♂️",
+    "Choose with your heart 💕",
+    "Hmm... the Yes button got bigger 👀",
+    "It keeps growing while you think 😏",
+    "I'm a patient guy 🥺",
+    "The No button is tired and running away 🏃‍♂️",
 ];
 
-// максимальный размер кнопки «Да» (на телефоне меньше, чтобы влезала)
+// max size of the Yes button (smaller on phones so it fits)
 const MAX_YES_SCALE = window.innerWidth < 500 ? 2.2 : 3;
-const RUNAWAY_AFTER = 5;      // после стольких «нет» кнопка начинает убегать
+const RUNAWAY_AFTER = 5;      // after this many "No" clicks the button starts running away
 
-// ===== Элементы =====
+// ===== Elements =====
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const hint = document.getElementById("hint");
@@ -34,25 +34,25 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 let noCount = 0;
 let yesScale = 1;
 
-// ===== Кнопка «Нет» =====
+// ===== "No" button =====
 function handleNoClick() {
     noBtn.textContent = messages[noCount % messages.length];
     noCount++;
 
-    // «Да» растёт, но не бесконечно (раньше могла вылезти за экран)
+    // "Yes" grows, but not forever (it used to overflow the screen)
     yesScale = Math.min(yesScale * 1.3, MAX_YES_SCALE);
     yesBtn.style.setProperty("--scale", yesScale);
 
     hint.textContent = hints[Math.min(Math.floor(noCount / 2), hints.length - 1)];
 
     noBtn.classList.remove("shake");
-    void noBtn.offsetWidth; // перезапуск анимации
+    void noBtn.offsetWidth; // restart the animation
     noBtn.classList.add("shake");
 
     if (noCount >= RUNAWAY_AFTER) {
         if (!noBtn.classList.contains("runaway")) {
-            // переносим в <body>: у карточки есть transform/blur,
-            // из-за которых position: fixed считался бы от карточки
+            // move it to <body>: the card has transform/blur,
+            // which would make position: fixed relative to the card
             document.body.appendChild(noBtn);
             noBtn.classList.add("runaway");
         }
@@ -67,7 +67,7 @@ function moveNoButton() {
     const maxX = window.innerWidth - rect.width - pad;
     const maxY = window.innerHeight - rect.height - pad;
 
-    // ищем место, которое не перекрывает кнопку «Да»
+    // find a spot that does not cover the Yes button
     let x, y, tries = 0;
     do {
         x = pad + Math.random() * Math.max(0, maxX - pad);
@@ -83,13 +83,13 @@ function moveNoButton() {
     noBtn.style.top = `${y}px`;
 }
 
-// Убегает при наведении мышки (на телефоне — при касании)
+// Runs away on mouse hover (on phones, on tap)
 noBtn.addEventListener("mouseenter", () => {
     if (noBtn.classList.contains("runaway")) moveNoButton();
 });
 noBtn.addEventListener("click", handleNoClick);
 
-// ===== Кнопка «Да» =====
+// ===== "Yes" button =====
 function handleYesClick() {
     yesBtn.disabled = true;
     noBtn.style.display = "none";
@@ -100,7 +100,7 @@ function handleYesClick() {
 }
 yesBtn.addEventListener("click", handleYesClick);
 
-// ===== Сердечки =====
+// ===== Hearts =====
 const heartChars = ["❤️", "💖", "💕", "💗", "💘", "🌸"];
 
 function spawnHeart(fromX) {
