@@ -3,16 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Я знал, что ты скажешь «Да»!</title>
+    <meta name="theme-color" content="#ff6b8b">
+    <title>Я знал, что ты скажешь «Да»! ❤️</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./yes_style.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="header_text">Я знал, что ты скажешь «Да»! ❤️</h1>
+    <div class="hearts" aria-hidden="true"></div>
 
+    <main class="card">
         <div class="gif_container">
-            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif" alt="Милый GIF">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif"
+                 alt="Счастливый мишка">
         </div>
-    </div>
+
+        <h1 class="header_text">Я знал, что ты скажешь «Да»! ❤️</h1>
+        <p class="sub">Тогда до завтра, принцесса 👑</p>
+    </main>
+
+    <script>
+        (function () {
+            const layer = document.querySelector(".hearts");
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            const chars = ["❤️", "💖", "💕", "💗", "🌹", "✨"];
+            function drop(fast) {
+                const h = document.createElement("span");
+                h.className = "heart fall";
+                h.textContent = chars[Math.floor(Math.random() * chars.length)];
+                h.style.left = Math.random() * 100 + "vw";
+                h.style.fontSize = 16 + Math.random() * 22 + "px";
+                h.style.animationDuration = (fast ? 2 + Math.random() * 2 : 5 + Math.random() * 5) + "s";
+                layer.appendChild(h);
+                h.addEventListener("animationend", () => h.remove());
+            }
+            for (let i = 0; i < 40; i++) setTimeout(() => drop(true), i * 40);
+            setInterval(() => drop(false), 400);
+        })();
+    </script>
 </body>
 </html>

@@ -1,51 +1,178 @@
+:root {
+    --pink-50: #fff0f4;
+    --pink-100: #ffe0e8;
+    --pink-300: #ff9fb6;
+    --pink-500: #ff6b8b;
+    --rose-700: #c2185b;
+    --text: #5a2a3a;
+    --yes: #ff4f7b;
+    --yes-dark: #e0355f;
+    --no: #b9a2ab;
+    --card-bg: rgba(255, 255, 255, 0.82);
+    --shadow: 0 20px 60px rgba(194, 24, 91, 0.18);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
 body {
+    margin: 0;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    font-family: 'Nunito', 'Arial', sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, var(--pink-50), var(--pink-100) 45%, #ffd6e2);
+    overflow: hidden;
+}
+
+/* ---------- Floating hearts ---------- */
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.heart {
+    position: absolute;
+    bottom: -40px;
+    opacity: 0;
+    animation: floatUp linear forwards;
+    user-select: none;
+}
+
+@keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.85; }
+    100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+}
+
+/* ---------- Card ---------- */
+.card {
+    position: relative;
+    z-index: 1;
+    width: min(460px, 100%);
+    padding: 28px 24px 32px;
+    text-align: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    animation: popIn 0.6s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.gif_container img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+h1 {
+    font-family: 'Comfortaa', 'Arial', sans-serif;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    line-height: 1.3;
+    color: var(--rose-700);
+    margin: 12px 0 6px;
+}
+
+.hint {
+    margin: 0 0 22px;
+    font-size: 1rem;
+    opacity: 0.8;
+    min-height: 1.5em;
+    transition: opacity 0.2s;
+}
+
+/* ---------- Buttons ---------- */
+.buttons {
     display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f9e3e3;
-    font-family: 'Arial', sans-serif;
-    flex-direction: column;
-  }
-  
-  .container {
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    color: #d32f2f;
-  }
-  
-  .buttons {
-    margin-top: 20px;
-  }
-  
-  .yes-button {
-    font-size: 1.5em;
-    padding: 10px 20px;
-    margin-right: 10px;
-    background-color: #4caf50;
-    color: white;
+    min-height: 70px;
+}
+
+.btn {
+    font-family: inherit;
+    font-weight: 700;
+    white-space: nowrap;
     border: none;
-    border-radius: 5px;
+    border-radius: 999px;
     cursor: pointer;
-  }
-  
-  .no-button {
-    font-size: 1.5em;
-    padding: 10px 20px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .gif_container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
+    color: #fff;
+    transition: transform 0.15s, box-shadow 0.2s, background 0.2s,
+                font-size 0.3s cubic-bezier(.2, 1.4, .4, 1), padding 0.3s;
+}
+
+.btn:focus-visible {
+    outline: 3px solid var(--rose-700);
+    outline-offset: 3px;
+}
+
+.yes-button {
+    --scale: 1;
+    font-size: calc(1.2rem * var(--scale));
+    padding: calc(12px * var(--scale)) calc(30px * var(--scale));
+    background: linear-gradient(135deg, var(--yes), var(--pink-500));
+    box-shadow: 0 8px 20px rgba(255, 79, 123, 0.4);
+    animation: pulse 1.8s ease-in-out infinite;
+}
+
+.yes-button:hover {
+    background: linear-gradient(135deg, var(--yes-dark), var(--yes));
+    transform: translateY(-2px);
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 8px 20px rgba(255, 79, 123, 0.4); }
+    50%      { box-shadow: 0 8px 32px rgba(255, 79, 123, 0.7); }
+}
+
+.no-button {
+    font-size: 1rem;
+    padding: 10px 22px;
+    background: var(--no);
+    max-width: 260px;
+    white-space: normal;
+}
+
+.no-button:hover { transform: translateY(-1px); }
+
+/* After a few "no" clicks the button starts running away */
+.no-button.runaway {
+    position: fixed;
+    z-index: 5;
+    width: max-content;
+    max-width: min(260px, calc(100vw - 32px));
+    transition: left 0.25s ease, top 0.25s ease, font-size 0.3s, padding 0.3s;
+}
+
+.shake { animation: shake 0.4s; }
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%  { transform: translateX(-6px); }
+    40%  { transform: translateX(6px); }
+    60%  { transform: translateX(-4px); }
+    80%  { transform: translateX(4px); }
+}
+
+/* ---------- Accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .hearts { display: none; }
+}

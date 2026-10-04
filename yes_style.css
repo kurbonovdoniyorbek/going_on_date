@@ -1,24 +1,53 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f9e3e3;
-    font-family: 'Arial', sans-serif;
+/* Дополнительные стили для страницы «Да» (основа — styles.css) */
+
+.heart.fall {
+    top: -40px;
+    bottom: auto;
+    animation-name: fallDown;
 }
 
-.container {
-    text-align: center;
+@keyframes fallDown {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(-30deg); opacity: 0; }
 }
 
 .header_text {
-    font-size: 3em;
-    color: #d32f2f;
+    font-size: clamp(1.6rem, 6vw, 2.3rem);
 }
 
-.gif_container img {
-    width: 100%; 
-    max-width: 500px; 
-    height: auto; 
+.sub {
+    margin: 0 0 20px;
+    font-size: 1.1rem;
+}
+
+.plan {
+    display: grid;
+    gap: 10px;
+    margin: 0 auto 18px;
+    max-width: 280px;
+}
+
+.plan-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: #fff;
+    border-radius: 14px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(194, 24, 91, 0.08);
+    animation: popIn 0.5s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+
+.plan-item:nth-child(1) { animation-delay: 0.3s; }
+.plan-item:nth-child(2) { animation-delay: 0.45s; }
+.plan-item:nth-child(3) { animation-delay: 0.6s; }
+
+.plan-item span { font-size: 1.3rem; }
+
+.note {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.75;
 }
