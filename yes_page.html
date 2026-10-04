@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ff6b8b">
-    <title>I knew you'd say yes, Gulasal! ❤️</title>
+    <title>Let's plan our date, Gulasal! ❤️</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,39 +12,129 @@
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./yes_style.css">
 </head>
-<body>
+<body class="planner-page">
     <div class="hearts" aria-hidden="true"></div>
 
-    <main class="card">
-        <div class="gif_container">
-            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif"
-                 alt="Happy teddy bear">
-        </div>
+    <main class="card planner">
+        <div class="progress" id="progress" aria-hidden="true"></div>
 
-        <h1 class="header_text">I knew you'd say yes, Gulasal! ❤️</h1>
-        <p class="sub">See you tomorrow, princess 👑</p>
+        <!-- STEP 0 — celebration -->
+        <section class="step active" data-step="0">
+            <div class="gif_container">
+                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif"
+                     alt="Happy teddy bear">
+            </div>
+            <h1 class="header_text">I knew you'd say yes, <span class="her-name">Gulasal</span>! ❤️</h1>
+            <p class="sub">Now let's plan our perfect date — you choose everything 💫</p>
+            <button type="button" class="btn primary" data-next>Let's plan it →</button>
+        </section>
 
-        <p class="note">Take a screenshot and send it to me 📸</p>
+        <!-- STEP 1 — when -->
+        <section class="step" data-step="1">
+            <h2>📅 When are you free?</h2>
+            <label class="field-label" for="dateInput">Pick a day</label>
+            <input type="date" id="dateInput" class="input">
+            <div class="quick-days" id="quickDays"></div>
+
+            <p class="field-label">What time?</p>
+            <div class="chips single" data-field="time">
+                <button type="button" class="chip" data-value="Lunch (12:00–14:00)">☀️ Lunch<small>12:00–14:00</small></button>
+                <button type="button" class="chip" data-value="Afternoon (15:00–18:00)">🌤️ Afternoon<small>15:00–18:00</small></button>
+                <button type="button" class="chip" data-value="Evening (18:00–21:00)">🌇 Evening<small>18:00–21:00</small></button>
+                <button type="button" class="chip" data-value="Late night (21:00+)">🌙 Late night<small>21:00+</small></button>
+            </div>
+            <label class="field-label" for="exactTime">Or an exact time (optional)</label>
+            <input type="time" id="exactTime" class="input">
+
+            <p class="error" id="err1"></p>
+            <div class="nav"><button type="button" class="btn ghost" data-back>← Back</button><button type="button" class="btn primary" data-next>Next →</button></div>
+        </section>
+
+        <!-- STEP 2 — what to do -->
+        <section class="step" data-step="2">
+            <h2>🎯 What do you want to do?</h2>
+            <p class="sub small">Pick up to 3</p>
+            <div class="chips grid multi" data-field="activities" data-max="3">
+                <button type="button" class="chip" data-value="Coffee date">☕<span>Coffee date</span></button>
+                <button type="button" class="chip" data-value="Dinner">🍽️<span>Dinner</span></button>
+                <button type="button" class="chip" data-value="Movie">🎬<span>Movie</span></button>
+                <button type="button" class="chip" data-value="Walk in the park">🌳<span>Walk in the park</span></button>
+                <button type="button" class="chip" data-value="Ice cream">🍦<span>Ice cream</span></button>
+                <button type="button" class="chip" data-value="Bowling">🎳<span>Bowling</span></button>
+                <button type="button" class="chip" data-value="Amusement park">🎡<span>Amusement park</span></button>
+                <button type="button" class="chip" data-value="Shopping">🛍️<span>Shopping</span></button>
+                <button type="button" class="chip" data-value="Surprise me">🎁<span>Surprise me</span></button>
+            </div>
+            <p class="error" id="err2"></p>
+            <div class="nav"><button type="button" class="btn ghost" data-back>← Back</button><button type="button" class="btn primary" data-next>Next →</button></div>
+        </section>
+
+        <!-- STEP 3 — food -->
+        <section class="step" data-step="3">
+            <h2>😋 What are you craving?</h2>
+            <p class="sub small">Pick as many as you like</p>
+            <div class="chips grid multi" data-field="food">
+                <button type="button" class="chip" data-value="Plov">🍚<span>Plov</span></button>
+                <button type="button" class="chip" data-value="Shashlik">🍢<span>Shashlik</span></button>
+                <button type="button" class="chip" data-value="Pizza">🍕<span>Pizza</span></button>
+                <button type="button" class="chip" data-value="Sushi">🍣<span>Sushi</span></button>
+                <button type="button" class="chip" data-value="Burgers">🍔<span>Burgers</span></button>
+                <button type="button" class="chip" data-value="Lavash">🌯<span>Lavash</span></button>
+                <button type="button" class="chip" data-value="Desserts">🍰<span>Desserts</span></button>
+                <button type="button" class="chip" data-value="You choose">🤷‍♀️<span>You choose</span></button>
+            </div>
+            <p class="error" id="err3"></p>
+            <div class="nav"><button type="button" class="btn ghost" data-back>← Back</button><button type="button" class="btn primary" data-next>Next →</button></div>
+        </section>
+
+        <!-- STEP 4 — details -->
+        <section class="step" data-step="4">
+            <h2>✨ Last little details</h2>
+
+            <p class="field-label">Dress vibe</p>
+            <div class="chips single" data-field="vibe">
+                <button type="button" class="chip" data-value="Casual">👟 Casual</button>
+                <button type="button" class="chip" data-value="Cute">🎀 Cute</button>
+                <button type="button" class="chip" data-value="Fancy">👗 Fancy</button>
+            </div>
+
+            <p class="field-label">How do we meet?</p>
+            <div class="chips single" data-field="pickup">
+                <button type="button" class="chip" data-value="Pick me up">🚗 Pick me up</button>
+                <button type="button" class="chip" data-value="Meet there">📍 Meet there</button>
+            </div>
+
+            <label class="field-label" for="note">Anything else I should know? (optional)</label>
+            <textarea id="note" class="input" rows="3" maxlength="500" placeholder="e.g. I want flowers 🌷"></textarea>
+
+            <div class="nav"><button type="button" class="btn ghost" data-back>← Back</button><button type="button" class="btn primary" data-next>Review →</button></div>
+        </section>
+
+        <!-- STEP 5 — summary -->
+        <section class="step" data-step="5">
+            <h2>💌 Our date plan</h2>
+            <ul class="summary" id="summary"></ul>
+            <p class="error" id="err5"></p>
+            <div class="nav"><button type="button" class="btn ghost" data-back>← Edit</button><button type="button" class="btn primary" id="sendBtn">Send it 💌</button></div>
+        </section>
+
+        <!-- STEP 6 — sent -->
+        <section class="step" data-step="6">
+            <div class="big-emoji">💌</div>
+            <h1 class="header_text">It's a date!</h1>
+            <p class="sub" id="sentText">Your plan is on its way to me. I can't wait 🥰</p>
+
+            <div class="fallback" id="fallback" hidden>
+                <p class="sub small">One more tap — send it to me on Telegram:</p>
+                <a class="btn primary" id="tgShare" target="_blank" rel="noopener">✈️ Send on Telegram</a>
+                <button type="button" class="btn ghost" id="copyBtn">📋 Copy the plan</button>
+            </div>
+
+            <button type="button" class="btn ghost" id="againBtn">Plan another date 🔁</button>
+        </section>
     </main>
 
-    <script>
-        (function () {
-            const layer = document.querySelector(".hearts");
-            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-            const chars = ["❤️", "💖", "💕", "💗", "🌹", "✨"];
-            function drop(fast) {
-                const h = document.createElement("span");
-                h.className = "heart fall";
-                h.textContent = chars[Math.floor(Math.random() * chars.length)];
-                h.style.left = Math.random() * 100 + "vw";
-                h.style.fontSize = 16 + Math.random() * 22 + "px";
-                h.style.animationDuration = (fast ? 2 + Math.random() * 2 : 5 + Math.random() * 5) + "s";
-                layer.appendChild(h);
-                h.addEventListener("animationend", () => h.remove());
-            }
-            for (let i = 0; i < 40; i++) setTimeout(() => drop(true), i * 40);
-            setInterval(() => drop(false), 400);
-        })();
-    </script>
+    <script src="config.js"></script>
+    <script src="planner.js"></script>
 </body>
 </html>
